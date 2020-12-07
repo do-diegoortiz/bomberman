@@ -1,0 +1,1 @@
+Use `npm init` to create package.json
