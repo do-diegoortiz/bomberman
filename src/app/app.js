@@ -4,4 +4,3 @@ document.addEventListener('DOMContentLoaded', () => {
     const level = new Level()
     level.render()
 })
-

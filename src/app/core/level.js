@@ -1,30 +1,46 @@
+import { levelItemType } from './constants';
 import { LevelItem } from './level-item'
+import './level.scss';
 
-const LEVEL_WIDTH = 15
-const LEVEL_HEIGHT = 15
+const LEVEL_WIDTH = 13
+const LEVEL_HEIGHT = 13
 
 export class Level {
     #columns = []
     #levelEl = document.createElement('div');
     #rootEl = document.getElementById('root');
+    #block = document.createElement('div');
 
     render() {
         this.#columns = this.#getColumns();
         console.log(this.#columns)
+        this.#block.classList.add('block');
 
-        const levelStyles = document.createElement('style')
-        levelStyles.innerHTML = `
-            .level {
-                display: flex;
-                background: url("../assets/game.jpg");
-                width: 650px;
-                height: 650px;
-            }
-        `
-        document.head.appendChild(levelStyles)
+        this.#setOutterWalls();
 
+        this.#columns.forEach(row => {
+            row.forEach(column => {
+                const newBlock = this.#block.cloneNode();
+                newBlock.classList.add(column.type);
+                this.#levelEl.appendChild(newBlock);
+            });
+        });
+        
         this.#levelEl.classList.add('level');
         this.#rootEl.appendChild(this.#levelEl)
+    }
+
+    #setOutterWalls() {
+        this.#columns.forEach((row, rowIndex) => {
+            row.forEach((column, colIndex) => {
+                const isFirstRowCol = (rowIndex === 0) || (colIndex === 0)
+                const isLastRowCol = (rowIndex === LEVEL_HEIGHT - 1) || (colIndex === LEVEL_WIDTH - 1)
+
+                if (isFirstRowCol || isLastRowCol) {
+                    column.type = levelItemType.OUTER_WALL
+                }
+            })
+        })
     }
 
     armBomb() {
@@ -48,7 +64,7 @@ export class Level {
 
         const createCellGroup = () => {
             const newRow = new Array(LEVEL_WIDTH).fill(null)
-            return newRow.map(createLevelItem)
+            return newRow.map(createLevelItem);
         }
 
         return new Array(LEVEL_HEIGHT).fill(null).map(createCellGroup)
