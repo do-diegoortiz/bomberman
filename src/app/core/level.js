@@ -1,7 +1,9 @@
+import { LevelItem } from './level-item'
+
 const LEVEL_WIDTH = 15
 const LEVEL_HEIGHT = 15
 
-class Level {
+export class Level {
     #columns = []
     #levelEl = document.createElement('div');
     #rootEl = document.getElementById('root');
