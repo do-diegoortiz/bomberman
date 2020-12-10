@@ -16,7 +16,7 @@ export class Level {
         console.log(this.#columns)
         this.#block.classList.add('block');
 
-        this.#setOutterWalls();
+        this.#setInitialWalls();
 
         this.#columns.forEach(row => {
             row.forEach(column => {
@@ -30,14 +30,18 @@ export class Level {
         this.#rootEl.appendChild(this.#levelEl)
     }
 
-    #setOutterWalls() {
+    #setInitialWalls() {
         this.#columns.forEach((row, rowIndex) => {
             row.forEach((column, colIndex) => {
                 const isFirstRowCol = (rowIndex === 0) || (colIndex === 0)
                 const isLastRowCol = (rowIndex === LEVEL_HEIGHT - 1) || (colIndex === LEVEL_WIDTH - 1)
 
+                const isHardWall = (rowIndex % 2 === 0) && (colIndex % 2 === 0)
+
                 if (isFirstRowCol || isLastRowCol) {
                     column.type = levelItemType.OUTER_WALL
+                } else if (isHardWall) {
+                    column.type = levelItemType.HARD_WALL
                 }
             })
         })
