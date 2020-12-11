@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+.html {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    background-image: url('../assets/wallpaper.jpg');
+}
+
+.body {
+
+}
+
+.root {
+    position: relative;
+}

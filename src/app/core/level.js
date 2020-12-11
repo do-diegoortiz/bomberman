@@ -33,6 +33,10 @@ export class Level {
     #setInitialWalls() {
         this.#columns.forEach((row, rowIndex) => {
             row.forEach((column, colIndex) => {
+                if (rowIndex === 6 && colIndex === 6) {
+                    return;
+                }
+
                 const isFirstRowCol = (rowIndex === 0) || (colIndex === 0)
                 const isLastRowCol = (rowIndex === LEVEL_HEIGHT - 1) || (colIndex === LEVEL_WIDTH - 1)
 

@@ -1,6 +1,6 @@
-import { Level } from './core/level'
+import './app.scss'
+import { Game } from './core/game'
 
-document.addEventListener('DOMContentLoaded', () => {
-    const level = new Level()
-    level.render()
-})
+const game = new Game();
+game.init();
+
