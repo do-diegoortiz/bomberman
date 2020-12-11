@@ -10,11 +10,8 @@ export class Player {
     render() {
         this.#playerEl.classList.add('player')
         this.#playerEl.style.transform = `translate(${this.x * 50}px, ${this.y * 50}px)`
-        this.move('right')
 
         this.#rootEl.appendChild(this.#playerEl)
-
-        window.juanMove = (pos) => {this.move(pos)}
     }
 
     destroy() {
