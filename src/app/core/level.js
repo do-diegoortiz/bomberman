@@ -1,4 +1,4 @@
-import { levelItemType } from './constants';
+import { directions, levelItemType } from './constants';
 import { LevelItem } from './level-item'
 import './level.scss';
 
@@ -13,7 +13,6 @@ export class Level {
 
     render() {
         this.#columns = this.#getColumns();
-        console.log(this.#columns)
         this.#block.classList.add('block');
 
         this.#setInitialWalls();
@@ -57,8 +56,17 @@ export class Level {
         // Destroy
     }
 
-    canMove() {
-
+    canMove(player, direction) {
+        switch (direction) {
+            case directions.LEFT:
+                return this.#columns[player.y][player.x - 1].type === levelItemType.EMPTY
+            case directions.TOP:
+                return this.#columns[player.y - 1][player.x].type === levelItemType.EMPTY
+            case directions.RIGHT:
+                return this.#columns[player.y][player.x + 1].type === levelItemType.EMPTY
+            case directions.DOWN:
+                return this.#columns[player.y + 1][player.x].type === levelItemType.EMPTY
+        }
     }
 
     destroy() {

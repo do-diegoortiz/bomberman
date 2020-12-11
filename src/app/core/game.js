@@ -17,16 +17,17 @@ export class Game {
         document.addEventListener('keydown', (event) => {
             switch (event.keyCode) {
                 case 37:
-                    this.#player.move(directions.LEFT)
+                    this.#level.canMove(this.#player, directions.LEFT) ? this.#player.move(directions.LEFT) : null
                     break
                 case 38:
-                    this.#player.move(directions.TOP)
+                    this.#level.canMove(this.#player, directions.TOP) ? this.#player.move(directions.TOP) : null
                     break
                 case 39:
-                    this.#player.move(directions.RIGHT)
+                    this.#level.canMove(this.#player, directions.RIGHT) ? this.#player.move(directions.RIGHT) : null
                     break
                 case 40:
-                    this.#player.move(directions.DOWN)        
+                    this.#level.canMove(this.#player, directions.DOWN) ? 
+                    this.#player.move(directions.DOWN) : null
                     break
             }
         })
