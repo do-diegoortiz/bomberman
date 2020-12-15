@@ -82,7 +82,7 @@ export class Level {
     }
 
     destroy() {
-
+        this.#levelEl.remove()
     }
 
     #getColumns() {

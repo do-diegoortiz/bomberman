@@ -1,25 +1,42 @@
 import { directions } from "./constants"
+import { ExitScreen } from "./exit-screen"
 import { Level } from "./level"
 import { Player } from "./player"
 import { Portal } from "./portal"
+import { Splash } from "./splash"
 
 export class Game {
     #level = new Level()
     #player = new Player()
     #portal = new Portal()
+    #exitScreen = new ExitScreen();
+    #splashScreen = new Splash();
+    #keyListener = () => {}
+    #gameStarted = false;
 
     init() {
-        this.#level.render()
-        this.#player.render()
-        this.#portal.render()
-
+        this.#splashScreen.render()
         this.#addKeysListener()
     }
 
-    #addKeysListener() {
-        document.addEventListener('keydown', (event) => {
-            let canMove;
+    #startTheGame() {
+        this.#level.render()
+        this.#player.render()
+        this.#portal.render()
+    }
 
+    #addKeysListener() {
+        this.#keyListener = (event) => {
+            if (!this.#gameStarted) {
+                this.#splashScreen.destroy()
+                this.#startTheGame()
+                this.#gameStarted = true;
+                
+                return;
+            }
+            
+            let canMove;
+    
             switch (event.keyCode) {
                 case 37:
                     canMove = this.#level.canMove(this.#player, directions.LEFT)
@@ -41,17 +58,26 @@ export class Game {
                     this.#level.armBomb(this.#player.x, this.#player.y)
                     break
             }
-
+    
             if (this.#portal.x === this.#player.x && this.#portal.y === this.#player.y) {
+                console.log('it exit')
                 this.#exitGame();
             }
-        })
+        }
+
+        document.addEventListener('keydown', this.#keyListener)
+    }
+
+    #removeKeysListener() {
+        document.removeEventListener('keydown', this.#keyListener)
     }
 
     #exitGame() {
         this.#level.destroy()
         this.#player.destroy()
         this.#portal.destroy()
-        // Show exit screen
+        
+        this.#removeKeysListener()
+        this.#exitScreen.render()
     }
 }

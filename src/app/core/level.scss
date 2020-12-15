@@ -1,3 +1,5 @@
+@import './z-index';
+
 .level {
     display: flex;
     flex-wrap: wrap;
@@ -9,6 +11,7 @@
 .block {
     width: 50px;
     height: 50px;
+    z-index: $zindex-300;    
 }
 
 .OuterWall {

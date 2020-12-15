@@ -1,5 +1,6 @@
-class Splash {
-    // console.log('It works')
+import splashScreen from '../../assets/splash-screen.jpg';
+
+export class Splash {
     #splashEl = document.createElement('div');
     #backgroundInterval = 0;
 
@@ -7,7 +8,7 @@ class Splash {
         const docStyles = document.createElement('style')
         docStyles.innerHTML = `
             .splash-screen {
-                background: url("../assets/splash-screen.jpg");
+                background: url(${splashScreen});
                 width: 650px;
                 height: 650px;
             }
