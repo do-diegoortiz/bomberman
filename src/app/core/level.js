@@ -4,6 +4,7 @@ import './level.scss';
 
 const LEVEL_WIDTH = 13
 const LEVEL_HEIGHT = 13
+const SOFT_WALL_RATIO = 0.3
 
 export class Level {
     #columns = []
@@ -17,10 +18,11 @@ export class Level {
 
         this.#setInitialWalls();
 
-        this.#columns.forEach(row => {
-            row.forEach(column => {
+        this.#columns.forEach((row, y) => {
+            row.forEach((column, x) => {
                 const newBlock = this.#block.cloneNode();
                 newBlock.classList.add(column.type);
+                newBlock.setAttribute('id', `${x},${y}`)
                 this.#levelEl.appendChild(newBlock);
             });
         });
@@ -45,14 +47,24 @@ export class Level {
                     column.type = levelItemType.OUTER_WALL
                 } else if (isHardWall) {
                     column.type = levelItemType.HARD_WALL
+                } else if (Math.random() < SOFT_WALL_RATIO) {
+                    column.type = levelItemType.SOFT_WALL
                 }
             })
         })
     }
 
-    armBomb() {
-        // Place the bomb
-        // Detonate
+    armBomb(x, y) {
+        const newBlock = this.#block.cloneNode();
+        newBlock.classList.add('bomb');
+        newBlock.style.top = `${y * 50}px`
+        newBlock.style.left = `${x * 50}px`
+        this.#levelEl.appendChild(newBlock);
+
+        setTimeout(() => {
+            this.#detonate(x, y)
+            newBlock.remove();
+        }, 2000)
         // Destroy
     }
 
@@ -84,5 +96,42 @@ export class Level {
         }
 
         return new Array(LEVEL_HEIGHT).fill(null).map(createCellGroup)
+    }
+
+    #detonate(x, y) {
+        const nodesToDelete = [];
+
+        const target_top = this.#columns[y-1][x]
+        if (target_top.type.includes(levelItemType.SOFT_WALL)) {
+            target_top.type = levelItemType.EMPTY
+            const node = document.getElementById(`${x},${y-1}`)
+            nodesToDelete.push(node)
+        }
+
+        const target_right = this.#columns[y][x+1]
+        if (target_right.type.includes(levelItemType.SOFT_WALL)) {
+            target_right.type = levelItemType.EMPTY
+            const node = document.getElementById(`${x+1},${y}`)
+            nodesToDelete.push(node)
+        }
+
+        const target_bottom = this.#columns[y+1][x]
+        if (target_bottom.type.includes(levelItemType.SOFT_WALL)) {
+            target_bottom.type = levelItemType.EMPTY
+            const node = document.getElementById(`${x},${y+1}`)
+            nodesToDelete.push(node)
+        }
+
+        const target_left = this.#columns[y][x-1]
+        if (target_left.type.includes(levelItemType.SOFT_WALL)) {
+            target_left.type = levelItemType.EMPTY
+            const node = document.getElementById(`${x-1},${y}`)
+            nodesToDelete.push(node)
+        }
+
+        nodesToDelete.forEach(node => {
+            node.classList.remove(levelItemType.SOFT_WALL)
+            node.classList.add(levelItemType.EMPTY)
+        })
     }
 }
