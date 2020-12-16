@@ -30,3 +30,39 @@
     position: absolute;
     background: url("../../assets/bomb.png");
 }
+
+.hard-wall-1 {
+    .HardWall {
+        background-position-x: 0;
+    }
+}
+
+.hard-wall-2 {
+    .HardWall {
+        background-position-x: -50px;
+    }
+}
+
+.hard-wall-3 {
+    .HardWall {
+        background-position-x: -100px;
+    }
+}
+
+.hard-wall-4 {
+    .HardWall {
+        background-position-x: -150px;
+    }
+}
+
+.hard-wall-5 {
+    .HardWall {
+        background-position-x: -200px;
+    }
+}
+
+.hard-wall-6 {
+    .HardWall {
+        background-position-x: -250px;
+    }
+}

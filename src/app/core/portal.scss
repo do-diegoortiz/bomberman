@@ -6,4 +6,5 @@
     height: 50px;
     background-image: url("../../assets/portal.png");
     z-index: $zindex-100;
+    transition: all 10ms;
 }

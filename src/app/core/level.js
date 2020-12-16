@@ -4,7 +4,7 @@ import './level.scss';
 
 const LEVEL_WIDTH = 13
 const LEVEL_HEIGHT = 13
-const SOFT_WALL_RATIO = 0.3
+const SOFT_WALL_RATIO = 0.1
 
 export class Level {
     #columns = []
@@ -29,6 +29,7 @@ export class Level {
         
         this.#levelEl.classList.add('level');
         this.#rootEl.appendChild(this.#levelEl)
+        this.#animate()
     }
 
     #setInitialWalls() {
@@ -134,4 +135,48 @@ export class Level {
             node.classList.add(levelItemType.EMPTY)
         })
     }
+
+    #animate() {   
+        let frame = 1
+
+        const animate = () => {
+            this.#levelEl.classList.remove(`hard-wall-${frame}`)
+            frame++
+            if (frame > 6) {
+                frame = 1
+            }
+
+            this.#levelEl.style.backgroundPositionX = `-${frame*650}px`
+            this.#levelEl.classList.add(`hard-wall-${frame}`)
+
+            const timeout = frame === 6 ? 2000 : 50
+            setTimeout(() => {
+                window.requestAnimationFrame(() => animate())
+            }, timeout)
+        }
+
+        animate();
+    }
+
+    // #animateBomb() {   
+    //     let frame = 1
+    //     let frameY = 1
+
+    //     const animate = () => {
+    //         frame++
+    //         frameY++
+    //         if (frame > 6) {
+    //             frame = 1
+    //         }
+
+    //         if (frameY > 3) {
+    //             frameY = 1
+    //         }
+
+    //         this.#levelEl.style.backgroundPositionX = `-${frame*50}px`
+    //         this.#levelEl.style.backgroundPositionY = `-${frameY*50}px`
+    //     }
+
+    //     setInterval(animate, 5)
+    // }
 }

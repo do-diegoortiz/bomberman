@@ -21,12 +21,35 @@ export class Portal {
         this.#portal.style.cssText = `
             top: ${this.y*50}px;
             left: ${this.x*50}px;
-        `         
+        `
 
         this.#rootEl.appendChild(this.#portal)
+        this.#animate()
     }
 
     destroy() {
         this.#portal.remove()
+    }
+
+    #animate() {   
+        let frameX = 1
+        let frameY = 1
+
+        const animate = () => {
+            frameX++
+            frameY++
+            if (frameX > 4) {
+                frameX = 1
+            }
+
+            if (frameY > 3) {
+                frameY = 1
+            }
+
+            this.#portal.style.backgroundPositionX = `-${frameX*50}px`
+            this.#portal.style.backgroundPositionY = `-${frameY*50}px)`
+        }
+
+        setInterval(animate, 100)
     }
 }
