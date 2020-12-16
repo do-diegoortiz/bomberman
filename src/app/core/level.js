@@ -63,10 +63,13 @@ export class Level {
         this.#levelEl.appendChild(newBlock);
 
         setTimeout(() => {
-            this.#detonate(x, y)
-            newBlock.remove();
-        }, 2000)
-        // Destroy
+            setTimeout(() => {
+                this.#detonate(x, y)
+                newBlock.remove();
+            }, 900)
+
+            this.#animateBomb(newBlock)
+        }, 1100)
     }
 
     canMove(player, direction) {
@@ -158,25 +161,25 @@ export class Level {
         animate();
     }
 
-    // #animateBomb() {   
-    //     let frame = 1
-    //     let frameY = 1
+    #animateBomb(bombEl) {   
+        let frame = 1
+        let frameY = 1
 
-    //     const animate = () => {
-    //         frame++
-    //         frameY++
-    //         if (frame > 6) {
-    //             frame = 1
-    //         }
+        const animate = () => {
+            frame++
+            frameY++
+            if (frame > 6) {
+                frame = 1
+            }
 
-    //         if (frameY > 3) {
-    //             frameY = 1
-    //         }
+            if (frameY > 3) {
+                frameY = 1
+            }
+debugger;
+            bombEl.style.backgroundPositionX = `-${frame*50}px`
+            bombEl.style.backgroundPositionY = `-${frameY*50}px`
+        }
 
-    //         this.#levelEl.style.backgroundPositionX = `-${frame*50}px`
-    //         this.#levelEl.style.backgroundPositionY = `-${frameY*50}px`
-    //     }
-
-    //     setInterval(animate, 5)
-    // }
+        setInterval(animate, 50)
+    }
 }

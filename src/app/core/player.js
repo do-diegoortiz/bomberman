@@ -39,7 +39,7 @@ export class Player {
             }
         }
 
-        this.#update(direction)
+        window.requestAnimationFrame(() => this.#update(direction))
     }
 
     #update(direction) {

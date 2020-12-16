@@ -12,5 +12,8 @@
   "devDependencies": {
     "parcel-bundler": "1.12.4",
     "sass": "1.30.0"
+  },
+  "dependencies": {
+    "dom-casts-css-kit": "^1.0.1"
   }
 }

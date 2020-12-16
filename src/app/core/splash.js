@@ -2,7 +2,6 @@ import splashScreen from '../../assets/splash-screen.jpg';
 
 export class Splash {
     #splashEl = document.createElement('div');
-    #backgroundInterval = 0;
 
     render() {
         const docStyles = document.createElement('style')
@@ -33,7 +32,6 @@ export class Splash {
 
     destroy() {
         this.#splashEl.remove();
-        clearInterval(this.#backgroundInterval);
     }
 
     #animate() {
@@ -49,8 +47,12 @@ export class Splash {
             frame++
             
             this.#splashEl.classList.add(`splash-screen-${frame}`)
+
+            setTimeout(() => {
+                window.requestAnimationFrame(() => backgroundAnimation())
+            }, 300)
         }
 
-        this.#backgroundInterval = setInterval(backgroundAnimation, 300)
+        backgroundAnimation();
     }
 }

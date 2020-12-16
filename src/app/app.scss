@@ -1,3 +1,5 @@
+@import "~dom-casts-css-kit/old-tv";
+
 * {
     box-sizing: border-box;
 }
@@ -10,10 +12,8 @@
     background-image: url('../assets/wallpaper.jpg');
 }
 
-.body {
-
-}
-
 .root {
     position: relative;
 }
+
+@include apply-old-tv-effect('root')

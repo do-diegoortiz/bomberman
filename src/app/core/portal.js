@@ -48,8 +48,12 @@ export class Portal {
 
             this.#portal.style.backgroundPositionX = `-${frameX*50}px`
             this.#portal.style.backgroundPositionY = `-${frameY*50}px)`
+
+            setTimeout(() => {
+                window.requestAnimationFrame(() => animate())
+            }, 100)
         }
 
-        setInterval(animate, 100)
+        animate()
     }
 }
