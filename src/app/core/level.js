@@ -1,6 +1,6 @@
-import { directions, levelItemType } from './constants';
+import { directions, levelItemType } from './constants'
 import { LevelItem } from './level-item'
-import './level.scss';
+import './level.scss'
 
 const LEVEL_WIDTH = 13
 const LEVEL_HEIGHT = 13
@@ -55,7 +55,7 @@ export class Level {
         })
     }
 
-    armBomb(x, y) {
+    armBomb(x, y, explosionComplete) {
         const newBlock = this.#block.cloneNode();
         newBlock.classList.add('bomb');
         newBlock.style.top = `${y * 50}px`
@@ -66,6 +66,7 @@ export class Level {
             setTimeout(() => {
                 this.#detonate(x, y)
                 newBlock.remove();
+                explosionComplete()
             }, 900)
 
             this.#animateBomb(newBlock)
